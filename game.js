@@ -8,6 +8,7 @@ var get_grappel = false;
 var used_grappel = false;
 var monkey_played = false;
 var get_rope = false;
+var get_key = false;
 
 class Demo1 extends AdventureScene {
     constructor() {
@@ -15,17 +16,20 @@ class Demo1 extends AdventureScene {
     }
     preload(){
         this.load.image("background1", "D2 assets/shore.png");
+        this.load.image("toolbox", "D2 assets/toolbox.png");
+        this.load.image("stones", "D2 assets/stones.png");
+        this.load.image("a1", "D2 assets/arrow.png");
     }
     onEnter() {
 
         let shore = this.add.image(0, this.h / 8, 'background1').setOrigin(0, 0)
         shore.setScale(3)
 
-        if(get_grappel == false){
-            let toolbox = this.add.text(this.w * 0.5, this.w * 0.15, "📎 toolbox")
-                .setFontSize(this.s * 2)
-                .setInteractive()
-                .on('pointerover', () => this.showMessage("Tools available for use. Maybe when I have enough materials."))
+        let toolbox = this.add.image(this.w * 0.5, this.w * 0.15, "toolbox")
+            .setScale(0.2)
+            .setInteractive()
+            if(get_grappel == false){
+                toolbox.on('pointerover', () => this.showMessage("Tools available for use. Maybe when I have enough materials."))
                 if(this.hasItem('Stones') == true && this.hasItem('Rope') == true && this.hasItem('Sticks') == true){
                     toolbox.on('pointerdown', () => {
                         this.showMessage("You crafted a grappling hook using the resources you gathered");
@@ -49,11 +53,16 @@ class Demo1 extends AdventureScene {
                         });
                     });
                 }
-        }
+            }
+            else{
+                toolbox.on('pointerdown', () => {
+                    this.showMessage("You crafted a grappling hook using the resources you gathered");
+                });
+            }
         
         if(get_stones == false){
-            let stones = this.add.text(this.w * 0.4, this.w * 0.3, "🔑 stones")
-                .setFontSize(this.s * 2)
+            let stones = this.add.image(this.w * 0.4, this.w * 0.3, "stones")
+                .setScale(2)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage("Some stones lying around.")
@@ -72,8 +81,9 @@ class Demo1 extends AdventureScene {
                 })
         }
 
-        let shore_forest = this.add.text(this.w * 0.63, this.w * 0.43, "🚪")
-            .setFontSize(this.s * 2)
+        let shore_forest = this.add.image(this.w * 0.63, this.w * 0.44, "a1")
+            .setScale(1)
+            .setAngle(90)
             .setInteractive()
             .on('pointerover', () => {
                     this.showMessage("Enter forest.");
@@ -91,13 +101,20 @@ class Demo2 extends AdventureScene {
     }
     preload(){
         this.load.image("background2", "D2 assets/forest.png");
+        this.load.image("sticks", "D2 assets/sticks.png");
+        this.load.image("fruit", "D2 assets/fruit.png");
+        this.load.image("flower", "D2 assets/flower.png");
+        this.load.image("a2", "D2 assets/arrow.png");
+        this.load.image("a3", "D2 assets/arrow.png");
+        this.load.image("a4", "D2 assets/arrow.png");
     }
     onEnter() {
 
         let shore = this.add.image(0, this.h / 8, 'background2').setOrigin(0, 0)
         shore.setScale(3)
-        let forest_shore = this.add.text(this.w * 0.06, this.w * 0.12, "🚪")
-            .setFontSize(this.s * 2)
+        let forest_shore = this.add.image(this.w * 0.07, this.w * 0.13, "a2")
+            .setScale(1)
+            .setAngle(315)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("Enter shore.");
@@ -106,8 +123,9 @@ class Demo2 extends AdventureScene {
                 this.gotoScene('demo1');
             });
 
-        let forest_cove = this.add.text(this.w * 0.025, this.w * 0.38, "🚪")
-            .setFontSize(this.s * 2)
+        let forest_cove = this.add.image(this.w * 0.045, this.w * 0.39, "a3")
+            .setScale(1)
+            .setAngle(270)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("Enter cove.");
@@ -116,8 +134,9 @@ class Demo2 extends AdventureScene {
                 this.gotoScene('demo3');
             });
 
-        let forest_peak = this.add.text(this.w * 0.43, this.w * 0.45, "🚪")
-            .setFontSize(this.s * 2)
+        let forest_peak = this.add.image(this.w * 0.44, this.w * 0.45, "a4")
+            .setScale(1)
+            .setAngle(180)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("Enter peak.");
@@ -127,8 +146,8 @@ class Demo2 extends AdventureScene {
             });
         
         if(get_sticks == false){
-            let sticks = this.add.text(this.w * 0.27, this.w * 0.23, "🔑 sticks")
-                .setFontSize(this.s * 2)
+            let sticks = this.add.image(this.w * 0.27, this.w * 0.23, "sticks")
+                .setScale(1)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage("Some sticks lying around.")
@@ -148,8 +167,8 @@ class Demo2 extends AdventureScene {
         }
 
         if(get_fruit == false ){
-            let fruit = this.add.text(this.w * 0.52, this.w * 0.3, "🔑 fruit")
-                .setFontSize(this.s * 2)
+            let fruit = this.add.image(this.w * 0.54, this.w * 0.32, "fruit")
+                .setScale(1)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage("There is a fruit growing here.")
@@ -171,8 +190,8 @@ class Demo2 extends AdventureScene {
         }
 
         if(get_flower == false){
-            let flower = this.add.text(this.w * 0.1, this.w * 0.35, "🔑 flower")
-                .setFontSize(this.s * 2)
+            let flower = this.add.image(this.w * 0.12, this.w * 0.33, "flower")
+                .setScale(1)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage("This flower smells nice.")
@@ -213,13 +232,18 @@ class Demo3 extends AdventureScene {
     }
     preload(){
         this.load.image("background3", "D2 assets/cove.png");
+        this.load.image("treasure", "D2 assets/treasure.png");
+        this.load.image("ball", "D2 assets/ball.png");
+        this.load.image("goldfruit", "D2 assets/goldfruit.png");
+        this.load.image("a5", "D2 assets/arrow.png");
     }
     onEnter() {
 
         let shore = this.add.image(0, this.h / 8, 'background3').setOrigin(0, 0)
         shore.setScale(3)
-        let shore_forest = this.add.text(this.w * 0.66, this.w * 0.26, "🚪")
-            .setFontSize(this.s * 2)
+        let shore_forest = this.add.image(this.w * 0.67, this.w * 0.27, "a5")
+            .setScale(1)
+            .setAngle(45)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("Enter forest.");
@@ -228,8 +252,8 @@ class Demo3 extends AdventureScene {
                 this.gotoScene('demo2');
             });
 
-        let treasure = this.add.text(this.w * 0.3, this.w * 0.15, "📎 treasure")
-            .setFontSize(this.s * 2)
+        let treasure = this.add.image(this.w * 0.3, this.w * 0.15, "treasure")
+            .setScale(1.5)
             .setInteractive()
             if(used_grappel == false){
                 if(treasure.y == this.w * 0.3){
@@ -249,6 +273,7 @@ class Demo3 extends AdventureScene {
                     this.showMessage("You used the grappling hook to pull the treasure in reach, but it appears to be locked.")
                     this.loseItem('Grappling Hook')
                     used_grappel = true;
+                    treasure.on('pointerover', () => this.showMessage("You used the grappling hook to pull the treasure in reach, but it appears to be locked."))
                     treasure.on('pointerdown', () => {
                         this.showMessage("It's locked!");
                         this.tweens.add({
@@ -264,7 +289,7 @@ class Demo3 extends AdventureScene {
             }
             else{
                 treasure.on('pointerdown', () => {
-                    if(used_grappel == true && this.hasItem('Key')){
+                    if(used_grappel == true && get_key == true){
                         treasure.on('pointerdown', () => {
                             this.showMessage("You unlocked the treasure and got a golden fruit!");
                             this.gainItem('Gold Fruit');
@@ -276,7 +301,8 @@ class Demo3 extends AdventureScene {
                                 onComplete: () => treasure.destroy()
                             });
                             get_treasure = true;
-                            let gold_fruit = this.add.text(this.w * 0.3, this.w * 0.3, "🔑 golden fruit")
+                            let gold_fruit = this.add.image(this.w * 0.3, this.w * 0.3, "goldfruit")
+                            .setScale(1)
                             this.tweens.add({
                                 targets: gold_fruit,
                                 y: `-=${2 * this.s}`,
@@ -287,8 +313,9 @@ class Demo3 extends AdventureScene {
                             });
                         });
                     }
-                    if(get_grappel == true && this.hasItem('Key') == false){
-                        this.showMessage("It's locked!");
+                    else if(get_grappel == true && get_key == false){
+                        treasure.on('pointerdown', () => {
+                            this.showMessage("It's locked!");
                             this.tweens.add({
                                 targets: treasure,
                                 x: '+=' + this.s,
@@ -297,24 +324,27 @@ class Demo3 extends AdventureScene {
                                 ease: 'Sine.inOut',
                                 duration: 100
                             });
+                        });
                     }
                     else{
-                        this.showMessage("It's too far to reach!");
-                        this.tweens.add({
-                            targets: treasure,
-                            x: '+=' + this.s,
-                            repeat: 2,
-                            yoyo: true,
-                            ease: 'Sine.inOut',
-                            duration: 100
+                        treasure.on('pointerdown', () => {
+                            this.showMessage("It's too far to reach!");
+                            this.tweens.add({
+                                targets: treasure,
+                                x: '+=' + this.s,
+                                repeat: 2,
+                                yoyo: true,
+                                ease: 'Sine.inOut',
+                                duration: 100
+                            });
                         });
                     }
                 });
             }
 
         if(get_ball == false){
-            let ball = this.add.text(this.w * 0.4, this.w * 0.4, "🔑 ball")
-                .setFontSize(this.s * 2)
+            let ball = this.add.image(this.w * 0.4, this.w * 0.4, "ball")
+                .setScale(1)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage("There is a ball lying on the sand.")
@@ -342,13 +372,15 @@ class Demo4 extends AdventureScene {
     preload(){
         this.load.image("background4", "D2 assets/peak.png");
         this.load.image("monkeynpc", "D2 assets/monkey.png");
+        this.load.image("a6", "D2 assets/arrow.png");
     }
     onEnter() {
 
         let shore = this.add.image(0, this.h / 8, 'background4').setOrigin(0, 0)
         shore.setScale(3)
-        let peak_forest = this.add.text(this.w * 0.07, this.w * 0.15, "🚪")
-            .setFontSize(this.s * 2)
+        let peak_forest = this.add.image(this.w * 0.08, this.w * 0.16, "a6")
+            .setScale(1)
+            .setAngle(315)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("Enter forest.");
@@ -375,20 +407,27 @@ class Demo4 extends AdventureScene {
                             this.gainItem('Rope');
                             this.loseItem('Ball');
                             get_rope = true;
+                            monkey_played = true;
                             });
                     }
                 }
-                else if(this.hasItem('Key') == false){
+                else if(get_key == false){
                     monkey.on('pointerover', () => {
                         this.showMessage("The monkey has enjoyed playing but now looks hungry.")
-                        this.gainItem('Hungry monkey');
+                        if(get_key == false){
+                            this.gainItem('Hungry monkey');
+                        }
                     })
                     if(this.hasItem('Fruit') == true){
                         monkey.on('pointerdown', () => {
                             this.showMessage("You gave the monkey the fruit and it gave you a key in return.");
                             this.gainItem('Key');
+                            get_key = true;
                             this.loseItem('Hungry monkey');
                             this.loseItem('Fruit');
+                            monkey.on('pointerover', () => {
+                                this.showMessage("You gave the monkey the fruit and it gave you a key in return.")
+                            })
                             });
                     }
                     else{}
@@ -399,6 +438,20 @@ class Demo4 extends AdventureScene {
                             this.loseItem('Flower');
                             });
                     }
+            if(get_treasure == true){
+                let monkeytwo = this.add.image(this.w * 0.5, this.w * 0.2, "monkeynpc")
+                    .setScale(0.2)
+                    .setInteractive()
+                    monkeytwo.on('pointerover', () => {
+                        this.showMessage("Another monkey appeared, and it looks very hungry!")
+                    });
+                    monkeytwo.on('pointerdown', () => {
+                        this.showMessage("It was delicious!");
+                        this.loseItem('Gold Fruit');
+                        this.time.delayedCall(1000, () => {
+                            this.gotoScene('outro')});
+                    });
+            }
     }
 }
 
@@ -407,7 +460,7 @@ class Intro extends Phaser.Scene {
         super('intro')
     }
     create() {
-        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        this.add.text(1920/2,1080/2, "Adventure awaits").setFontSize(50).setOrigin(0,0);
         this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
@@ -421,7 +474,7 @@ class Outro extends Phaser.Scene {
         super('outro');
     }
     create() {
-        this.add.text(50, 50, "That's all!").setFontSize(50);
+        this.add.text(0,0, "The End!").setFontSize(50).setOrigin(0,0);
         this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
@@ -435,7 +488,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Demo1, Demo2, Demo3, Demo4] ,
+    scene: [Outro, Intro] ,
     // [Intro, Demo1, Demo2, Demo3, Demo4, Outro],
     title: "Adventure Game",
 });
