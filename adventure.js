@@ -21,15 +21,18 @@ class AdventureScene extends Phaser.Scene {
 
         this.add.rectangle(this.w * 0.75, 0, this.w * 0.25, this.h).setOrigin(0, 0).setFillStyle(0);
         this.add.text(this.w * 0.75 + this.s, this.s)
+            .setFontFamily('Impact')
             .setText(this.name)
             .setStyle({ fontSize: `${3 * this.s}px` })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
         
         this.messageBox = this.add.text(this.w * 0.75 + this.s, this.h * 0.33)
+            .setFontFamily('Impact')
             .setStyle({ fontSize: `${2 * this.s}px`, color: '#eea' })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
 
         this.inventoryBanner = this.add.text(this.w * 0.75 + this.s, this.h * 0.66)
+            .setFontFamily('Impact')
             .setStyle({ fontSize: `${2 * this.s}px` })
             .setText("Inventory")
             .setAlpha(0);
@@ -84,6 +87,7 @@ class AdventureScene extends Phaser.Scene {
         let h = this.h * 0.66 + 3 * this.s;
         this.inventory.forEach((e, i) => {
             let text = this.add.text(this.w * 0.75 + 2 * this.s, h, e)
+                .setFontFamily('Impact')
                 .setStyle({ fontSize: `${1.5 * this.s}px` })
                 .setWordWrapWidth(this.w * 0.75 + 4 * this.s);
             h += text.height + this.s;
@@ -146,5 +150,37 @@ class AdventureScene extends Phaser.Scene {
 
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
+    }
+
+    getItemAnimation(item) {
+        this.tweens.add({
+            targets: item,
+            y: `-=${2 * this.s}`,
+            alpha: { from: 1, to: 0 },
+            duration: 500,
+            onComplete: () => item.destroy()
+        });
+    }
+
+    noAccessAnimation(item) {
+        this.tweens.add({
+            targets: item,
+            x: '+=' + this.s,
+            repeat: 2,
+            yoyo: true,
+            ease: 'Sine.inOut',
+            duration: 100
+        });
+    }
+
+    pulseAnimation(item){
+        this.tweens.add({
+            targets: item,
+            scale: 1.15,
+            repeat: -1,
+            yoyo: true,
+            ease: 'Sine.inOut',
+            duration: 500,
+        })
     }
 }
