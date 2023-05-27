@@ -482,6 +482,8 @@ function handleOrientationChange() {
     var orientation = window.innerWidth > window.innerHeight ? 90 : 0;;
     // Rotate the game canvas accorning to the orientation
     game.canvas.style.transform = 'rotate(' + orientation.angle + 'deg)';
+    // Resize the game canvas to fit the new orientation
+    game.scale.refresh();
 }
 
 // intitalize function
