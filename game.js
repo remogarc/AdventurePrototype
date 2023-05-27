@@ -467,9 +467,22 @@ const game = new Phaser.Game({
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 1920,
-        height: 1080
+        height: 1080,
     },
     scene: [Intro, Demo1, Demo2, Demo3, Demo4, Outro],
     title: "Adventure Game",
 });
 
+// make game rotate
+window.addEventListener('resize', handleOrientationChange);
+
+// function to handle orientation change
+function handleOrientationChange() {
+    // Get the orientation of the device in space, report back in degrees
+    var orientation = window.innerWidth > window.innerHeight ? 90 : 0;;
+    // Rotate the game canvas accorning to the orientation
+    game.canvas.style.transform = 'rotate(' + orientation.angle + 'deg)';
+}
+
+// intitalize function
+handleOrientationChange();
